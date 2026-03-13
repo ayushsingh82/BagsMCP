@@ -1,8 +1,6 @@
 # BagsMCP
 
-**Bags data for non-devs: MCP server + spreadsheets / BI**
-
-BagsMCP exposes Bags API data through an **MCP (Model Context Protocol) server** so anyone can query it from AI assistants (e.g. Cursor, Claude), spreadsheets, or BI tools without writing code.
+BagsMCP is **MCP for non-devs**. It exposes the Bags API through the Model Context Protocol so anyone—community managers, researchers, and VCs—can get full insight into the Bags ecosystem without writing code. List tokens, check token health, see top claimers and fee stats, and export or live-connect to Google Sheets and Docs. One integration works everywhere: Cursor, Claude, spreadsheets, or BI. **Complete insight, zero code.**
 
 ## What it does
 
@@ -38,23 +36,6 @@ BagsMCP exposes Bags API data through an **MCP (Model Context Protocol) server**
 - **Language:** TypeScript
 - **Styling:** Tailwind CSS
 - **MCP:** Bags API wrapped as MCP server (tools/resources for tokens, health, claimers, fees)
-
-## Getting started
-
-1. Clone and install:
-   ```bash
-   git clone <repository-url>
-   cd KalshiBags
-   npm install
-   ```
-
-2. Run the app:
-   ```bash
-   npm run dev
-   ```
-   Open [http://localhost:3000](http://localhost:3000).
-
-3. (Optional) Run or connect the MCP server per project docs to use Bags data from Cursor, Claude, or other MCP clients.
 
 ## Design
 

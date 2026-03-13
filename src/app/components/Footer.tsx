@@ -13,7 +13,7 @@ export default function Footer() {
           All rights reserved.
         </p>
         <Link
-          href="https://github.com"
+          href="https://github.com/ayushsingh82/BagsMCP"
           target="_blank"
           rel="noopener noreferrer"
           className="text-white/50 hover:text-[#20D55A] transition-colors order-1 sm:order-2"

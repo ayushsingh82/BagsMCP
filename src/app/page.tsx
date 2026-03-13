@@ -31,12 +31,12 @@ export default function Home() {
         <div className="max-w-4xl mx-auto">
           {/* Hero */}
           <section className="text-center mb-16 md:mb-20">
-            <p
-              className="text-xs font-medium uppercase tracking-[0.25em] mb-6"
-              style={{ color: 'rgba(255,255,255,0.45)' }}
+            <span
+              className="inline-block text-xs font-medium uppercase tracking-[0.25em] mb-6 px-4 py-2 rounded-full border"
+              style={{ color: 'rgba(255,255,255,0.45)', borderColor: 'rgba(255,255,255,0.45)' }}
             >
               Bags API via MCP
-            </p>
+            </span>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold text-white tracking-tight leading-[1.1] mb-5">
               Bags data for
               <span style={{ color: GREEN }}> non-devs</span>
