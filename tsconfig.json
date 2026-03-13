@@ -38,6 +38,7 @@
   "exclude": [
     "node_modules",
     "src/bags",
-    "src/kalshi"
+    "src/kalshi",
+    "mcp-server"
   ]
 }
