@@ -1,147 +1,158 @@
 import Navbar from './components/Navbar';
-import Ticker from './components/Ticker';
-import Link from 'next/link';
+
+const GREEN = '#20D55A';
 
 export default function Home() {
   return (
     <div className="min-h-screen flex flex-col" style={{ backgroundColor: '#000000' }}>
-      {/* Ticker */}
-      <Ticker />
-
-      {/* Navbar */}
       <Navbar />
 
-      {/* Main Content */}
-      <main className="flex-1 flex flex-col items-center justify-center px-6 py-12 text-center mt-8" style={{ backgroundColor: '#000000' }}>
-        <div className="max-w-4xl mx-auto space-y-8">
-          {/* Hero Section */}
-          <div className="space-y-6">
-            <div className="inline-block px-4 py-2 border border-white/20 rounded-full">
-              <p className="text-sm text-white/40">
-                When confidence crosses a threshold, a token is born.
-                <span className="text-[#000000] bg-[#20D55A] rounded-full px-2 py-1 transition-colors"> Learn more {'->'}</span>
-              </p>
+      <main className="flex-1 px-6 py-16 md:py-24" style={{ backgroundColor: '#000000' }}>
+        <div className="max-w-4xl mx-auto">
+          {/* Hero */}
+          <section className="text-center mb-20 md:mb-28">
+            <p
+              className="text-xs font-medium uppercase tracking-[0.25em] mb-6"
+              style={{ color: 'rgba(255,255,255,0.45)' }}
+            >
+              Bags API via MCP
+            </p>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold text-white tracking-tight leading-[1.1] mb-5">
+              Bags data for
+              <span style={{ color: GREEN }}> non-devs</span>
+            </h1>
+            <p className="text-lg md:text-xl max-w-2xl mx-auto mb-10" style={{ color: 'rgba(255,255,255,0.5)' }}>
+              Query tokens, health, claimers, and fee stats from AI assistants, spreadsheets, and BI tools. No code required.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <button
+                className="px-6 py-3 rounded-lg text-sm font-semibold text-black transition-opacity hover:opacity-90"
+                style={{ backgroundColor: GREEN }}
+              >
+                Get started
+              </button>
+              <a
+                href="#features"
+                className="px-6 py-3 rounded-lg text-sm font-semibold border transition-colors hover:border-[#20D55A]"
+                style={{ color: 'rgba(255,255,255,0.8)', borderColor: 'rgba(255,255,255,0.15)' }}
+              >
+                Features
+              </a>
             </div>
-            <h2 className="text-3xl sm:text-3xl lg:text-4xl font-bold text-white leading-tight">
-              Confidence-Triggered
-              <span className="bg-[#20D55A] border border-white/20 rounded-full px-2 py-1 transition-colors"> Token Launch </span>
+          </section>
+
+          {/* What you get */}
+          <section className="mb-24 md:mb-32">
+            <h2 className="text-sm font-medium uppercase tracking-wider mb-8" style={{ color: 'rgba(255,255,255,0.4)' }}>
+              What you get
             </h2>
-            <p className="text-xl text-white/40 font-semibold">
-              Signal-based minting via Bags API
-            </p>
-          </div>
-
-          {/* Description */}
-          <div className="space-y-4 max-w-3xl mx-auto">
-            <p className="text-base text-white/40 leading-relaxed">
-              Monitor Kalshi probabilities in real-time. When confidence crosses a threshold, tokens are automatically minted via Bags API.
-            </p>
-            <div className="p-6 rounded-lg border border-white/20 mt-6 text-left" style={{ backgroundColor: '#000000' }}>
-              <h3 className="text-lg font-semibold text-white mb-3">Example:</h3>
-              <p className="text-sm text-white/40">
-                When &quot;US recession in 2025&quot; probability exceeds <span className="font-bold text-[#20D55A]">70%</span>, 
-                <span className="font-bold text-white"> $RECESSION25 </span> token is auto-minted via Bags.
-              </p>
+            <div
+              className="rounded-xl border p-6 md:p-8 text-left"
+              style={{ borderColor: 'rgba(255,255,255,0.08)', backgroundColor: 'rgba(255,255,255,0.02)' }}
+            >
+              <ul className="space-y-4 text-sm md:text-base" style={{ color: 'rgba(255,255,255,0.6)' }}>
+                <li className="flex items-start gap-3">
+                  <span style={{ color: GREEN }} className="mt-0.5">—</span>
+                  <span><strong className="text-white">List tokens</strong> — Discover and filter the Bags ecosystem</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span style={{ color: GREEN }} className="mt-0.5">—</span>
+                  <span><strong className="text-white">Token health</strong> — Fee distribution, claimers, concentration</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span style={{ color: GREEN }} className="mt-0.5">—</span>
+                  <span><strong className="text-white">Top claimers & fee stats</strong> — For research and due diligence</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span style={{ color: GREEN }} className="mt-0.5">—</span>
+                  <span><strong className="text-white">Export to Sheets / Airtable</strong> — Or use from your AI assistant</span>
+                </li>
+              </ul>
             </div>
-          </div>
+          </section>
 
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Link href="/tokens" className="px-6 py-3 border border-white/20 text-white font-semibold rounded-lg transition-colors">
-              View Active Tokens
-            </Link>
-            <button className="px-6 py-3 bg-[#20D55A] text-gray-900 font-semibold rounded-lg transition-colors hover:bg-green-400">
-              Monitor Markets
-            </button>
-          </div>
-
-          {/* Features Section */}
-          <div className="space-y-8 max-w-4xl mx-auto mt-24">
-            <div className="text-center space-y-4">
-              <h3 className="text-2xl sm:text-3xl font-bold text-white">
-                Why this approach?
-              </h3>
-            </div>
-
-            {/* Three Feature Boxes */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="p-6 rounded-lg border border-white/20" style={{ backgroundColor: '#000000' }}>
-                <h4 className="text-lg font-semibold text-white mb-3">Signal-Based Minting</h4>
-                <p className="text-sm text-white/40">
-                  Tokens are created only when real-world events reach significant confidence thresholds, ensuring meaningful launches.
+          {/* Features */}
+          <section id="features" className="mb-24 md:mb-32">
+            <h2 className="text-sm font-medium uppercase tracking-wider mb-10" style={{ color: 'rgba(255,255,255,0.4)' }}>
+              Why BagsMCP
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+              <div
+                className="rounded-xl border p-6 md:p-7"
+                style={{ borderColor: 'rgba(255,255,255,0.08)', backgroundColor: 'rgba(255,255,255,0.02)' }}
+              >
+                <h3 className="text-base font-semibold text-white mb-2">No code</h3>
+                <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.5)' }}>
+                  Community managers, researchers, and VCs use Bags data from AI chats, Sheets, or BI—no custom dashboard to build.
                 </p>
               </div>
-              
-              <div className="p-6 rounded-lg border border-white/20" style={{ backgroundColor: '#000000' }}>
-                <h4 className="text-lg font-semibold text-white mb-3">Prevents Spam Tokens</h4>
-                <p className="text-sm text-white/40">
-                  Automatic filtering through probability thresholds means only tokens with genuine market signals are created.
+              <div
+                className="rounded-xl border p-6 md:p-7"
+                style={{ borderColor: 'rgba(255,255,255,0.08)', backgroundColor: 'rgba(255,255,255,0.02)' }}
+              >
+                <h3 className="text-base font-semibold text-white mb-2">MCP everywhere</h3>
+                <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.5)' }}>
+                  One integration works with Cursor, Claude, and any client that speaks Model Context Protocol.
                 </p>
               </div>
-              
-              <div className="p-6 rounded-lg border border-white/20" style={{ backgroundColor: '#000000' }}>
-                <h4 className="text-lg font-semibold text-white mb-3">Data-Driven Launches</h4>
-                <p className="text-sm text-white/40">
-                  Every token launch is backed by real market data from Kalshi, creating transparent and verifiable token creation.
+              <div
+                className="rounded-xl border p-6 md:p-7"
+                style={{ borderColor: 'rgba(255,255,255,0.08)', backgroundColor: 'rgba(255,255,255,0.02)' }}
+              >
+                <h3 className="text-base font-semibold text-white mb-2">Your tools</h3>
+                <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.5)' }}>
+                  Pull tokens, health, and fee stats into Google Sheets, Airtable, or natural-language queries.
                 </p>
               </div>
             </div>
-          </div>
+          </section>
 
+          {/* How it works - compact, no navbar link */}
+          <section className="pt-16 border-t" style={{ borderColor: 'rgba(255,255,255,0.06)' }}>
+            <h2 className="text-sm font-medium uppercase tracking-wider mb-10" style={{ color: 'rgba(255,255,255,0.4)' }}>
+              How it works
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+              <div className="text-center md:text-left">
+                <div
+                  className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold text-black mb-4"
+                  style={{ backgroundColor: GREEN }}
+                >
+                  1
+                </div>
+                <h3 className="text-white font-semibold mb-2">Connect</h3>
+                <p className="text-sm" style={{ color: 'rgba(255,255,255,0.5)' }}>
+                  Add the BagsMCP server to your AI assistant or connect to Sheets / BI.
+                </p>
+              </div>
+              <div className="text-center md:text-left">
+                <div
+                  className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold text-black mb-4"
+                  style={{ backgroundColor: GREEN }}
+                >
+                  2
+                </div>
+                <h3 className="text-white font-semibold mb-2">Query</h3>
+                <p className="text-sm" style={{ color: 'rgba(255,255,255,0.5)' }}>
+                  Use tools: list tokens, token health, top claimers, fee stats.
+                </p>
+              </div>
+              <div className="text-center md:text-left">
+                <div
+                  className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold text-black mb-4"
+                  style={{ backgroundColor: GREEN }}
+                >
+                  3
+                </div>
+                <h3 className="text-white font-semibold mb-2">Use</h3>
+                <p className="text-sm" style={{ color: 'rgba(255,255,255,0.5)' }}>
+                  Export to spreadsheets, feed reports, or let your AI use Bags data in context.
+                </p>
+              </div>
+            </div>
+          </section>
         </div>
       </main>
-
-      {/* How It Works Section */}
-      <div className="py-16 px-6 w-full" style={{ backgroundColor: '#000000' }}>
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <h3 className="text-2xl sm:text-3xl font-bold text-white mb-4">
-              How It Works
-            </h3>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-            <div className="text-center space-y-4">
-              <div className="w-16 h-16 bg-[#20D55A] rounded-full flex items-center justify-center mx-auto">
-                <span className="text-black font-bold text-2xl">1</span>
-              </div>
-              <h4 className="text-xl font-semibold text-white">Monitor Kalshi</h4>
-              <p className="text-sm leading-relaxed text-white/40">
-                Continuously track probability markets on Kalshi for various events and predictions.
-              </p>
-            </div>
-            
-            <div className="text-center space-y-4">
-              <div className="w-16 h-16 bg-[#20D55A] rounded-full flex items-center justify-center mx-auto">
-                <span className="text-black font-bold text-2xl">2</span>
-              </div>
-              <h4 className="text-xl font-semibold text-white">Threshold Detection</h4>
-              <p className="text-sm leading-relaxed text-white/40">
-                When confidence crosses a predefined threshold (e.g., 70%), the system triggers token creation.
-              </p>
-            </div>
-            
-            <div className="text-center space-y-4">
-              <div className="w-16 h-16 bg-[#20D55A] rounded-full flex items-center justify-center mx-auto">
-                <span className="text-black font-bold text-2xl">3</span>
-              </div>
-              <h4 className="text-xl font-semibold text-white">Auto-Mint via Bags</h4>
-              <p className="text-sm leading-relaxed text-white/40">
-                Tokens are automatically minted using the Bags API, creating a seamless launch process.
-              </p>
-            </div>
-          </div>
-
-          <div className="border-t border-white/20 pt-8 text-center">
-            <p className="text-lg text-white mb-2">
-              Direct token purchases from the platform
-            </p>
-            <p className="text-white/40 font-semibold text-sm">
-              Coming Soon
-            </p>
-          </div>
-        </div>
-      </div>
     </div>
   );
 }

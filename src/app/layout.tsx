@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "KalshiBags - Confidence-Triggered Token Launch",
-  description: "When confidence crosses a threshold, a token is born. Signal-based minting via Bags API using Kalshi probability markets.",
+  title: "BagsMCP - Bags API via MCP for Everyone",
+  description: "Query Bags data from AI assistants, spreadsheets, and BI tools. MCP server exposing tokens, health, claimers, and fee stats—no code required.",
 };
 
 export default function RootLayout({

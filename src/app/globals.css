@@ -13,9 +13,9 @@
 }
 
 body {
-  background: #ffffff;
-  color: #171717;
-  font-family: Arial, Helvetica, sans-serif;
+  background: #0a0a0a;
+  color: #fafafa;
+  font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
 }
 
 @keyframes scroll {
@@ -30,4 +30,27 @@ body {
 .animate-scroll {
   animation: scroll 60s linear infinite;
   display: flex;
+}
+
+@keyframes ping-slow {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 0; transform: scale(1.5); }
+}
+
+@keyframes ping-slower {
+  0%, 100% { opacity: 0.25; transform: scale(1); }
+  50% { opacity: 0; transform: scale(1.4); }
+}
+
+.animate-ping-slow {
+  animation: ping-slow 2s ease-in-out infinite;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+.animate-ping-slower {
+  animation: ping-slower 2.5s ease-in-out infinite;
+  animation-delay: 0.3s;
+  transform-origin: center;
+  transform-box: fill-box;
 }
