@@ -29,12 +29,59 @@ async function bagsFetch<T>(
   return data;
 }
 
+type FeedItem = {
+  name?: string;
+  symbol?: string;
+  description?: string;
+  image?: string;
+  tokenMint?: string;
+  status?: string;
+  twitter?: string;
+  website?: string;
+  launchSignature?: string;
+  uri?: string;
+  dbcPoolKey?: string;
+  dbcConfigKey?: string;
+};
+
+type CreatorItem = {
+  username?: string;
+  pfp?: string;
+  royaltyBps?: number;
+  isCreator?: boolean;
+  wallet?: string;
+  provider?: string;
+  providerUsername?: string;
+  twitterUsername?: string;
+  bagsUsername?: string;
+  isAdmin?: boolean;
+};
+
 /** GET /token-launch/lifetime-fees?tokenMint=... */
 export async function getTokenLifetimeFees(
   tokenMint: string,
   apiKey: string
 ): Promise<BagsApiResponse<string>> {
   return bagsFetch<string>("/token-launch/lifetime-fees", apiKey, { tokenMint });
+}
+
+/** GET /token-launch/feed */
+export async function getTokenLaunchFeed(
+  apiKey: string
+): Promise<BagsApiResponse<FeedItem[]>> {
+  return bagsFetch<FeedItem[]>("/token-launch/feed", apiKey);
+}
+
+/** GET /token-launch/creator/v3?tokenMint=... (tokenMint optional in case API allows defaults) */
+export async function getTokenLaunchCreators(
+  apiKey: string,
+  tokenMint?: string
+): Promise<BagsApiResponse<CreatorItem[]>> {
+  return bagsFetch<CreatorItem[]>(
+    "/token-launch/creator/v3",
+    apiKey,
+    tokenMint ? { tokenMint } : undefined
+  );
 }
 
 /** GET /token-launch/claim-stats?tokenMint=... - top claimers and stats */
@@ -57,14 +104,26 @@ export async function getTokenClaimStats(
   return bagsFetch("/token-launch/claim-stats", apiKey, { tokenMint });
 }
 
-/** GET /state/bags-pools - list Bags pools (tokens). Path may vary. */
+/** GET /solana/bags/pools - list Bags pools (token + pool keys). */
 export async function getBagsPools(
   apiKey: string
 ): Promise<BagsApiResponse<Array<{ tokenMint?: string; baseMint?: string; [key: string]: unknown }>>> {
-  const result = await bagsFetch<unknown>("/state/bags-pools", apiKey);
+  const result = await bagsFetch<unknown>("/solana/bags/pools", apiKey);
   if (!result.success) {
-    return { success: true, response: [] };
+    return { success: false, error: result.error };
   }
   const arr = Array.isArray(result.response) ? result.response : [];
   return { success: true, response: arr as Array<{ tokenMint?: string; baseMint?: string; [key: string]: unknown }> };
+}
+
+/** GET /token-launch/claimable-positions?user=... (user optional to support API variants) */
+export async function getClaimablePositions(
+  apiKey: string,
+  user?: string
+): Promise<BagsApiResponse<Array<Record<string, unknown>>>> {
+  return bagsFetch<Array<Record<string, unknown>>>(
+    "/token-launch/claimable-positions",
+    apiKey,
+    user ? { user } : undefined
+  );
 }

@@ -8,9 +8,12 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import {
+  getTokenLaunchFeed,
+  getTokenLaunchCreators,
   getTokenLifetimeFees,
   getTokenClaimStats,
   getBagsPools,
+  getClaimablePositions,
 } from "./bags-api.js";
 import { z } from "zod";
 
@@ -29,6 +32,61 @@ const server = new McpServer({
   name: "bagsmcp",
   version: "1.0.0",
 });
+
+server.registerTool(
+  "bags_get_token_launch_feed",
+  {
+    description:
+      "Retrieve recent and active token launches from Bags feed.",
+    inputSchema: {},
+  },
+  async () => {
+    const apiKey = requireApiKey();
+    const result = await getTokenLaunchFeed(apiKey);
+    if (!result.success) {
+      return {
+        content: [{ type: "text", text: `Error fetching launch feed: ${result.error}` }],
+        isError: true,
+      };
+    }
+    const preview = result.response.slice(0, 25);
+    return {
+      content: [
+        {
+          type: "text",
+          text: `Launch feed count: ${result.response.length}\nShowing first ${preview.length} items:\n${JSON.stringify(preview, null, 2)}`,
+        },
+      ],
+    };
+  }
+);
+
+server.registerTool(
+  "bags_get_token_launch_creators",
+  {
+    description:
+      "Retrieve creators/deployers of token launches (v3). Pass tokenMint for a specific token.",
+    inputSchema: {
+      tokenMint: z
+        .string()
+        .optional()
+        .describe("Optional Solana token mint (Base58)."),
+    },
+  },
+  async ({ tokenMint }) => {
+    const apiKey = requireApiKey();
+    const result = await getTokenLaunchCreators(apiKey, tokenMint);
+    if (!result.success) {
+      return {
+        content: [{ type: "text", text: `Error fetching token creators: ${result.error}` }],
+        isError: true,
+      };
+    }
+    return {
+      content: [{ type: "text", text: JSON.stringify(result.response, null, 2) }],
+    };
+  }
+);
 
 server.registerTool(
   "bags_get_token_lifetime_fees",
@@ -105,10 +163,43 @@ server.registerTool(
     }
     const text =
       result.response.length === 0
-        ? "No pools returned (API may use a different listing endpoint). You can still use bags_get_token_lifetime_fees and bags_get_token_claim_stats with a specific token mint."
+        ? "No pools returned."
         : JSON.stringify(result.response, null, 2);
     return {
       content: [{ type: "text", text }],
+    };
+  }
+);
+
+server.registerTool(
+  "bags_get_claimable_positions",
+  {
+    description:
+      "Retrieve claimable fee positions. Optionally pass a wallet/user address to filter positions.",
+    inputSchema: {
+      user: z
+        .string()
+        .optional()
+        .describe("Optional Solana wallet address (Base58)."),
+    },
+  },
+  async ({ user }) => {
+    const apiKey = requireApiKey();
+    const result = await getClaimablePositions(apiKey, user);
+    if (!result.success) {
+      return {
+        content: [{ type: "text", text: `Error fetching claimable positions: ${result.error}` }],
+        isError: true,
+      };
+    }
+    const preview = result.response.slice(0, 50);
+    return {
+      content: [
+        {
+          type: "text",
+          text: `Claimable positions count: ${result.response.length}\nShowing first ${preview.length} items:\n${JSON.stringify(preview, null, 2)}`,
+        },
+      ],
     };
   }
 );
