@@ -1,26 +1,7 @@
 import Navbar from './components/Navbar';
+import McpSetupPanel from './components/McpSetupPanel';
 
 const GREEN = '#20D55A';
-
-function GoogleSheetsIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
-      <rect x="3" y="3" width="18" height="18" rx="2" fill="#0F9D58" />
-      <path d="M3 8h18M3 13h18M8 3v18M13 3v18" stroke="rgba(255,255,255,0.4)" strokeWidth="1.2" />
-      <rect x="4" y="4" width="4" height="3" fill="rgba(255,255,255,0.25)" rx="0.5" />
-    </svg>
-  );
-}
-
-function GoogleDocsIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
-      <path d="M5 2h9l5 5v11a2 2 0 01-2 2H5a2 2 0 01-2-2V4a2 2 0 012-2z" fill="#4285F4" />
-      <path d="M14 2v5h5" fill="#3367D6" />
-      <path d="M8 11h8M8 14h8M8 17h5" stroke="white" strokeWidth="1.1" strokeLinecap="round" />
-    </svg>
-  );
-}
 
 export default function Home() {
   return (
@@ -32,45 +13,61 @@ export default function Home() {
           {/* Hero */}
           <section className="text-center mb-16 md:mb-20">
             <span
-              className="inline-block text-xs font-medium uppercase tracking-[0.25em] mb-6 px-4 py-2 rounded-full border"
+              className="inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.25em] mb-6 px-4 py-2 rounded-full border"
               style={{ color: 'rgba(255,255,255,0.45)', borderColor: 'rgba(255,255,255,0.45)' }}
             >
-              Bags API via MCP
+              <img
+                src="https://bags.fm/assets/images/bags-icon.png"
+                alt="Bags"
+                className="w-4 h-4 rounded-sm"
+                loading="lazy"
+                referrerPolicy="no-referrer"
+              />
+              Bags Data via MCP
             </span>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold text-white tracking-tight leading-[1.1] mb-5">
               Bags data for
-              <span style={{ color: GREEN }}> non-devs</span>
+              <span style={{ color: GREEN }}> Everyone</span>
             </h1>
             <p className="text-lg md:text-xl max-w-2xl mx-auto mb-8" style={{ color: 'rgba(255,255,255,0.5)' }}>
-              Query tokens, health, claimers, and fee stats from AI assistants, spreadsheets, and BI tools. No code required.
+              Query tokens, health, claimers, and fee stats ,etc using MCP server & get data into Google Sheets, Google Docs. No code required.
             </p>
-            {/* Works with: Google Docs, Sheets */}
+            {/* Works with: Cursor, Claude */}
             <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12 mb-10">
               <span className="text-xs font-medium uppercase tracking-widest" style={{ color: 'rgba(255,255,255,0.4)' }}>
-                Use Bags data in
+                Use MCP server in
               </span>
               <div className="flex items-center gap-6">
                 <div className="flex items-center gap-2 rounded-lg px-4 py-2.5 border border-white/10 bg-white/5 hover:bg-white/[0.08] transition-colors">
-                  <GoogleSheetsIcon className="w-7 h-7 flex-shrink-0" />
-                  <span className="text-sm font-medium text-white/90">Sheets</span>
+                  <img
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnQbz3c2-DSKpInXJjhhenXinyn_9fZO9Dug&s"
+                    alt="Cursor"
+                    className="w-7 h-7 rounded-md object-cover flex-shrink-0"
+                    loading="lazy"
+                    referrerPolicy="no-referrer"
+                  />
+                  <span className="text-sm font-medium text-white/90">Cursor</span>
                 </div>
                 <div className="flex items-center gap-2 rounded-lg px-4 py-2.5 border border-white/10 bg-white/5 hover:bg-white/[0.08] transition-colors">
-                  <GoogleDocsIcon className="w-7 h-7 flex-shrink-0" />
-                  <span className="text-sm font-medium text-white/90">Docs</span>
-                </div>
-                <div className="flex items-center gap-2 rounded-lg px-4 py-2.5 border border-white/10 bg-white/5">
-                  <span className="text-lg">✨</span>
-                  <span className="text-sm font-medium text-white/90">AI assistants</span>
+                  <img
+                    src="https://media.licdn.com/dms/image/v2/D4E0BAQFko-zWIZk_pw/company-logo_200_200/B4EZhiRWKvHgAI-/0/1753995371543/claude_logo?e=2147483647&v=beta&t=CVNmFKyWig0Uo78oAr3II6KVLu_o0aXPtnt4S6XgOr8"
+                    alt="Claude"
+                    className="w-7 h-7 rounded-md object-cover flex-shrink-0"
+                    loading="lazy"
+                    referrerPolicy="no-referrer"
+                  />
+                  <span className="text-sm font-medium text-white/90">Claude</span>
                 </div>
               </div>
             </div>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
-              <button
+              <a
+                href="#mcp-setup"
                 className="px-6 py-3 rounded-lg text-sm font-semibold text-black transition-opacity hover:opacity-90"
                 style={{ backgroundColor: GREEN }}
               >
-                Get started
-              </button>
+                Setup MCP
+              </a>
               <a
                 href="#features"
                 className="px-6 py-3 rounded-lg text-sm font-semibold border transition-colors hover:border-[#20D55A]"
@@ -81,35 +78,9 @@ export default function Home() {
             </div>
           </section>
 
-          {/* What you get */}
-          <section className="mb-24 md:mb-32">
-            <h2 className="text-sm font-medium uppercase tracking-wider mb-8" style={{ color: 'rgba(255,255,255,0.4)' }}>
-              What you get
-            </h2>
-            <div
-              className="rounded-xl border p-6 md:p-8 text-left"
-              style={{ borderColor: 'rgba(255,255,255,0.08)', backgroundColor: 'rgba(255,255,255,0.02)' }}
-            >
-              <ul className="space-y-4 text-sm md:text-base" style={{ color: 'rgba(255,255,255,0.6)' }}>
-                <li className="flex items-start gap-3">
-                  <span style={{ color: GREEN }} className="mt-0.5">—</span>
-                  <span><strong className="text-white">List tokens</strong> — Discover and filter the Bags ecosystem</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span style={{ color: GREEN }} className="mt-0.5">—</span>
-                  <span><strong className="text-white">Token health</strong> — Fee distribution, claimers, concentration</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span style={{ color: GREEN }} className="mt-0.5">—</span>
-                  <span><strong className="text-white">Top claimers & fee stats</strong> — For research and due diligence</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span style={{ color: GREEN }} className="mt-0.5">—</span>
-                  <span><strong className="text-white">Google Sheets & Docs</strong> — Export or live-connect; use from AI assistants too</span>
-                </li>
-              </ul>
-            </div>
-          </section>
+ 
+
+          <McpSetupPanel />
 
           {/* Features */}
           <section id="features" className="mb-24 md:mb-32">
@@ -174,7 +145,7 @@ export default function Home() {
                 </div>
                 <h3 className="text-white font-semibold mb-2">Query</h3>
                 <p className="text-sm" style={{ color: 'rgba(255,255,255,0.5)' }}>
-                  Use tools: list tokens, token health, top claimers, fee stats.
+                  Use tools: list tokens, token health, top claimers, fee stats , etc 
                 </p>
               </div>
               <div className="text-center md:text-left">
