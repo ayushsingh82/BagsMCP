@@ -1,0 +1,364 @@
+Base URL
+All API endpoints use the following base URL:
+https://public-api-v2.bags.fm/api/v1/
+
+Get Token Launch Feed
+
+Open in ChatGPT
+
+Retrieve the token launch feed containing recent and active token launches with their current status.
+
+GET
+/
+token-launch
+/
+feed
+
+Try it
+Authorizations
+​
+x-api-key
+stringheaderrequired
+API key authentication. Provide your API key as the header value.
+const options = {method: 'GET', headers: {'x-api-key': '<api-key>'}};
+
+fetch('https://public-api-v2.bags.fm/api/v1/token-launch/feed', options)
+  .then(res => res.json())
+  .then(res => console.log(res))
+  .catch(err => console.error(err));
+
+  {
+  "success": true,
+  "response": [
+    {
+      "name": "<string>",
+      "symbol": "<string>",
+      "description": "<string>",
+      "image": "<string>",
+      "tokenMint": "<string>",
+      "status": "PRE_LAUNCH",
+      "twitter": "<string>",
+      "website": "<string>",
+      "launchSignature": "<string>",
+      "accountKeys": [
+        "<string>"
+      ],
+      "numRequiredSigners": 123,
+      "uri": "<string>",
+      "dbcPoolKey": "<string>",
+      "dbcConfigKey": "<string>"
+    }
+  ]
+}
+
+
+Create Token Info and Metadata
+
+Open in ChatGPT
+
+Create token information with image upload and generate a token mint that can be used to launch a token
+
+POST
+/
+token-launch
+/
+create-token-info
+
+Try it
+Authorizations
+​
+x-api-key
+stringheaderrequired
+API key authentication. Provide your API key as the header value.
+
+
+
+
+Token Launch
+Create Token Info and Metadata
+
+Open in ChatGPT
+
+Create token information with image upload and generate a token mint that can be used to launch a token
+
+POST
+/
+token-launch
+/
+create-token-info
+
+Try it
+Authorizations
+​
+x-api-key
+stringheaderrequired
+API key authentication. Provide your API key as the header value.
+
+const form = new FormData();
+form.append('image', '<string>');
+form.append('name', '<string>');
+form.append('symbol', '<string>');
+form.append('description', '<string>');
+form.append('imageUrl', '<string>');
+form.append('metadataUrl', '<string>');
+form.append('telegram', '<string>');
+form.append('twitter', '<string>');
+form.append('website', '<string>');
+form.append('0.image', '{
+  "fileName": "example-file"
+}');
+form.append('1.image', '{
+  "fileName": "example-file"
+}');
+form.append('2.image', '{
+  "fileName": "example-file"
+}');
+
+const options = {method: 'POST', headers: {'x-api-key': '<api-key>'}};
+
+options.body = form;
+
+fetch('https://public-api-v2.bags.fm/api/v1/token-launch/create-token-info', options)
+  .then(res => res.json())
+  .then(res => console.log(res))
+  .catch(err => console.error(err));
+
+  {
+  "success": true,
+  "response": {
+    "tokenMint": "<string>",
+    "tokenMetadata": "<string>",
+    "tokenLaunch": {
+      "name": "<string>",
+      "symbol": "<string>",
+      "description": "<string>",
+      "image": "<string>",
+      "tokenMint": "<string>",
+      "status": "PRE_LAUNCH",
+      "createdAt": "2023-11-07T05:31:56Z",
+      "updatedAt": "2023-11-07T05:31:56Z",
+      "userId": "<string>",
+      "telegram": "<string>",
+      "twitter": "<string>",
+      "website": "<string>",
+      "launchWallet": "<string>",
+      "launchSignature": "<string>",
+      "uri": "<string>"
+    }
+  }
+}
+
+Get Token Launch Creators
+
+Open in ChatGPT
+
+Retrieve the creators/deployers of a specific token launch. Use the ‘provider’ field to show a platform logo in your UI, and prefer ‘providerUsername’ for display when present since ‘username’ is a Bags internal username and optional.
+
+GET
+/
+token-launch
+/
+creator
+/
+v3
+
+Try it
+
+
+const options = {method: 'GET', headers: {'x-api-key': '<api-key>'}};
+
+fetch('https://public-api-v2.bags.fm/api/v1/token-launch/creator/v3', options)
+  .then(res => res.json())
+  .then(res => console.log(res))
+  .catch(err => console.error(err));
+
+  {
+  "success": true,
+  "response": [
+    {
+      "username": "<string>",
+      "pfp": "<string>",
+      "royaltyBps": 123,
+      "isCreator": true,
+      "wallet": "<string>",
+      "provider": "twitter",
+      "providerUsername": "<string>",
+      "twitterUsername": "<string>",
+      "bagsUsername": "<string>",
+      "isAdmin": true
+    }
+  ]
+}
+
+Analytics
+Get Token Lifetime Fees
+
+Open in ChatGPT
+
+Retrieve the total lifetime fees collected for a specific token
+
+GET
+/
+token-launch
+/
+lifetime-fees
+
+Try it
+Authorizations
+​
+x-api-key
+stringheaderrequired
+API key authentication. Provide your API key as the header value.
+
+
+
+const options = {method: 'GET', headers: {'x-api-key': '<api-key>'}};
+
+fetch('https://public-api-v2.bags.fm/api/v1/token-launch/lifetime-fees', options)
+  .then(res => res.json())
+  .then(res => console.log(res))
+  .catch(err => console.error(err));
+
+  {
+  "success": true,
+  "response": "<string>"
+}
+
+nalytics
+Get Token Claim Stats
+
+Open in ChatGPT
+
+Retrieve claim statistics for all fee claimers of a specific token, including total claimed amounts per user.
+
+GET
+/
+token-launch
+/
+claim-stats
+
+Try it
+Authorizations
+​
+x-api-key
+stringheaderrequired
+API key authentication. Provide your API key as the header value.
+
+
+
+const options = {method: 'GET', headers: {'x-api-key': '<api-key>'}};
+
+fetch('https://public-api-v2.bags.fm/api/v1/token-launch/claim-stats', options)
+  .then(res => res.json())
+  .then(res => console.log(res))
+  .catch(err => console.error(err));
+
+  v1
+  State
+Get Bags Pools
+
+Open in ChatGPT
+
+Retrieve a list of all Bags pools with their associated Meteora DBC and DAMM v2 pool keys
+
+GET
+/
+solana
+/
+bags
+/
+pools
+
+Try it
+Authorizations
+​
+x-api-key
+stringheaderrequired
+API key authentication. Provide your API key as the header value.
+
+
+
+const options = {method: 'GET', headers: {'x-api-key': '<api-key>'}};
+
+fetch('https://public-api-v2.bags.fm/api/v1/solana/bags/pools', options)
+  .then(res => res.json())
+  .then(res => console.log(res))
+  .catch(err => console.error(err));
+
+  {
+  "success": true,
+  "response": [
+    {
+      "tokenMint": "<string>",
+      "dbcConfigKey": "<string>",
+      "dbcPoolKey": "<string>",
+      "dammV2PoolKey": "<string>"
+    }
+  ]
+}
+
+Fee Claiming
+Get Claimable Positions
+
+Open in ChatGPT
+
+Retrieve all claimable fee positions for a wallet. Returns positions with fee information from virtual pools and DAMM v2.
+
+GET
+/
+token-launch
+/
+claimable-positions
+
+Try it
+Authorizations
+​
+x-api-key
+stringheaderrequired
+API key authentication. Provide your API key as the header value.
+
+const options = {method: 'GET', headers: {'x-api-key': '<api-key>'}};
+
+fetch('https://public-api-v2.bags.fm/api/v1/token-launch/claimable-positions', options)
+  .then(res => res.json())
+  .then(res => console.log(res))
+  .catch(err => console.error(err));
+
+  {
+  "success": true,
+  "response": [
+    {
+      "isCustomFeeVault": true,
+      "baseMint": "<string>",
+      "isMigrated": true,
+      "totalClaimableLamportsUserShare": 123,
+      "programId": "<string>",
+      "quoteMint": "<string>",
+      "virtualPool": "<string>",
+      "virtualPoolAddress": "<string>",
+      "virtualPoolClaimableAmount": 123,
+      "virtualPoolClaimableLamportsUserShare": 123,
+      "dammPoolClaimableAmount": 123,
+      "dammPoolClaimableLamportsUserShare": 123,
+      "dammPoolAddress": "<string>",
+      "dammPositionInfo": {
+        "position": "<string>",
+        "pool": "<string>",
+        "positionNftAccount": "<string>",
+        "tokenAMint": "<string>",
+        "tokenBMint": "<string>",
+        "tokenAVault": "<string>",
+        "tokenBVault": "<string>"
+      },
+      "claimableDisplayAmount": 123,
+      "user": "<string>",
+      "claimerIndex": 123,
+      "userBps": 123,
+      "customFeeVault": "<string>",
+      "customFeeVaultClaimerA": "<string>",
+      "customFeeVaultClaimerB": "<string>",
+      "customFeeVaultClaimerSide": "A"
+    }
+  ]
+}
+

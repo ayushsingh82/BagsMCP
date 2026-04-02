@@ -1,6 +1,6 @@
 # BagsMCP Server
 
-MCP server that exposes Bags API data as **tools** so you can query tokens, lifetime fees, and claim stats from AI assistants (Cursor, Claude), spreadsheets, or any MCP client—no code required.
+MCP server that exposes Bags API data as **tools** so you can query launch feed, pools, creators, claimable positions, lifetime fees, and claim stats from AI assistants (Cursor, Claude), spreadsheets, or any MCP client—no code required.
 
 ## Prerequisites
 
@@ -87,9 +87,12 @@ Restart Cursor (or reload MCP) and you can ask the AI to use Bags data via the t
 
 | Tool | Description |
 |------|-------------|
+| `bags_get_token_launch_feed` | Get recent/active token launch feed from Bags. |
+| `bags_get_token_launch_creators` | Get token creators/deployers (v3). Optional `tokenMint` filter. |
 | `bags_get_token_lifetime_fees` | Get total lifetime fees (lamports) for a token mint. |
 | `bags_get_token_claim_stats` | Get claim stats for all fee claimers: wallet, total claimed, royalty bps, is creator. |
-| `bags_list_pools` | List Bags pools (tokens). Returns whatever the Bags API provides for listing. |
+| `bags_list_pools` | List all Bags pools with token mint + DBC/DAMM pool keys. |
+| `bags_get_claimable_positions` | Get claimable fee positions for a wallet (`user`) or default API scope. |
 
 All tools require a valid `BAGS_API_KEY` in the environment.
 
