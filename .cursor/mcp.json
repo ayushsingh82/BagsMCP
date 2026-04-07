@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "bagsmcp": {
+      "command": "bash",
+      "args": ["${workspaceFolder}/mcp-server/run-mcp.sh"]
+    }
+  }
+}

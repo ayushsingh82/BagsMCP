@@ -3,50 +3,53 @@
 import { useMemo, useState } from 'react';
 
 const GREEN = '#20D55A';
-const MCP_SERVER_DIR = '/Users/ayush/Desktop/india winner/KalshiBags/mcp-server';
-const MCP_SERVER_DIST = '/Users/ayush/Desktop/india winner/KalshiBags/mcp-server/dist/index.js';
+/** Absolute path to mcp-server (for Claude Desktop). Edit if you move the repo. */
+const MCP_SERVER_ABS = '/Users/ayush/Desktop/mcps/BagsMCP/mcp-server';
+const MCP_RUN_SCRIPT = `${MCP_SERVER_ABS}/run-mcp.sh`;
+const MCP_SERVER_DIST = `${MCP_SERVER_ABS}/dist/index.js`;
 
 const cursorConfig = `{
   "mcpServers": {
     "bagsmcp": {
-      "command": "npm",
-      "args": ["run", "dev", "--prefix", "${MCP_SERVER_DIR}"],
-      "env": {
-        "BAGS_API_KEY": "your_bags_api_key_here"
-      }
+      "command": "bash",
+      "args": ["\${workspaceFolder}/mcp-server/run-mcp.sh"]
     }
   }
 }`;
 
-const claudeConfig = `{
-  "mcpServers": {
-    "bagsmcp": {
-      "command": "npm",
-      "args": ["run", "dev", "--prefix", "${MCP_SERVER_DIR}"],
-      "env": {
-        "BAGS_API_KEY": "your_bags_api_key_here"
-      }
-    }
-  }
-}`;
+const claudeConfig =
+  '{\n' +
+  '  "mcpServers": {\n' +
+  '    "bagsmcp": {\n' +
+  '      "command": "bash",\n' +
+  '      "args": ["' +
+  MCP_RUN_SCRIPT.replace(/\\/g, '\\\\').replace(/"/g, '\\"') +
+  '"]\n' +
+  '    }\n' +
+  '  }\n' +
+  '}';
 
-const endpointsText = `Bags API base URL:
-https://public-api-v2.bags.fm/api/v1
-
-Read-only endpoints used:
-- /token-launch/feed
-- /token-launch/creator/v3
-- /token-launch/lifetime-fees
-- /token-launch/claim-stats
-- /solana/bags/pools
-- /token-launch/claimable-positions
-
-MCP transport:
-- Local stdio server (dev):
-  npm run dev --prefix "${MCP_SERVER_DIR}"
-
-- Local stdio server (prod):
-  node "${MCP_SERVER_DIST}"`;
+const endpointsText =
+  'Bags API base URL:\n' +
+  'https://public-api-v2.bags.fm/api/v1\n' +
+  '\n' +
+  'Read-only endpoints used:\n' +
+  '- /token-launch/feed\n' +
+  '- /token-launch/creator/v3\n' +
+  '- /token-launch/lifetime-fees\n' +
+  '- /token-launch/claim-stats\n' +
+  '- /solana/bags/pools\n' +
+  '- /token-launch/claimable-positions\n' +
+  '\n' +
+  'MCP transport:\n' +
+  '- From BagsMCP repo root (recommended): npm run mcp:dev\n' +
+  '- Or: cd mcp-server && npx --yes tsx src/index.ts\n' +
+  '  (Running npx tsx src/index.ts from the Next.js root fails — there is no src/index.ts there.)\n' +
+  '- Loads BAGS_API_KEY from ../.env: bash ' +
+  MCP_RUN_SCRIPT +
+  '\n' +
+  '- Prod (after npm run build in mcp-server): node ' +
+  MCP_SERVER_DIST;
 
 export default function McpSetupPanel() {
   const [target, setTarget] = useState<'cursor' | 'claude'>('cursor');
