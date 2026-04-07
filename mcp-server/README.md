@@ -92,9 +92,81 @@ Restart Cursor (or reload MCP) and you can ask the AI to use Bags data via the t
 | `bags_get_token_lifetime_fees` | Get total lifetime fees (lamports) for a token mint. |
 | `bags_get_token_claim_stats` | Get claim stats for all fee claimers: wallet, total claimed, royalty bps, is creator. |
 | `bags_list_pools` | List all Bags pools with token mint + DBC/DAMM pool keys. |
-| `bags_get_claimable_positions` | Get claimable fee positions for a wallet (`user`) or default API scope. |
+| `bags_get_claimable_positions` | Get claimable fee positions for a `wallet` address. |
 
 All tools require a valid `BAGS_API_KEY` in the environment.
+
+## Testing
+
+### Quick test (all tools)
+
+Make sure you have a `.env` file in the project root with your API key:
+
+```bash
+echo "BAGS_API_KEY=your_key_here" > .env
+```
+
+Then run individual tool tests via stdin JSON-RPC:
+
+```bash
+# 1. Test server starts
+echo '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2024-11-05","capabilities":{},"clientInfo":{"name":"test","version":"1.0"}}}' \
+  | bash mcp-server/run-mcp.sh 2>/dev/null
+
+# 2. List all registered tools
+printf '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2024-11-05","capabilities":{},"clientInfo":{"name":"test","version":"1.0"}}}\n{"jsonrpc":"2.0","method":"notifications/initialized"}\n{"jsonrpc":"2.0","id":2,"method":"tools/list","params":{}}\n' \
+  | bash mcp-server/run-mcp.sh 2>/dev/null
+```
+
+### Test each tool
+
+Replace `MINT` and `WALLET` with real values. A known test mint: `fCr6CkpRDnpuwxqWmfTjQpu4XrsbRFm4fLWU9PtBAGS`
+
+```bash
+MINT="fCr6CkpRDnpuwxqWmfTjQpu4XrsbRFm4fLWU9PtBAGS"
+WALLET="8pkdpxzAxqNKdt1wot9bxRwXa4VHGjXKwjvKGqKd7C9J"
+INIT='{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2024-11-05","capabilities":{},"clientInfo":{"name":"test","version":"1.0"}}}\n{"jsonrpc":"2.0","method":"notifications/initialized"}\n'
+
+# bags_list_pools (no args)
+printf "${INIT}"'{"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"bags_list_pools","arguments":{}}}\n' \
+  | bash mcp-server/run-mcp.sh 2>/dev/null
+
+# bags_get_token_launch_feed (no args)
+printf "${INIT}"'{"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"bags_get_token_launch_feed","arguments":{}}}\n' \
+  | bash mcp-server/run-mcp.sh 2>/dev/null
+
+# bags_get_token_launch_creators (needs tokenMint)
+printf "${INIT}"'{"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"bags_get_token_launch_creators","arguments":{"tokenMint":"'$MINT'"}}}\n' \
+  | bash mcp-server/run-mcp.sh 2>/dev/null
+
+# bags_get_token_lifetime_fees (needs tokenMint)
+printf "${INIT}"'{"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"bags_get_token_lifetime_fees","arguments":{"tokenMint":"'$MINT'"}}}\n' \
+  | bash mcp-server/run-mcp.sh 2>/dev/null
+
+# bags_get_token_claim_stats (needs tokenMint)
+printf "${INIT}"'{"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"bags_get_token_claim_stats","arguments":{"tokenMint":"'$MINT'"}}}\n' \
+  | bash mcp-server/run-mcp.sh 2>/dev/null
+
+# bags_get_claimable_positions (needs wallet)
+printf "${INIT}"'{"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"bags_get_claimable_positions","arguments":{"wallet":"'$WALLET'"}}}\n' \
+  | bash mcp-server/run-mcp.sh 2>/dev/null
+```
+
+### Expected results
+
+| Tool | Expected |
+|------|----------|
+| `bags_list_pools` | JSON array of pools with `tokenMint`, `dbcPoolKey` fields |
+| `bags_get_token_launch_feed` | `Launch feed count: N` + JSON array of launches |
+| `bags_get_token_launch_creators` | JSON array with `username`, `wallet`, `royaltyBps` |
+| `bags_get_token_lifetime_fees` | `Lifetime fees (lamports): N` |
+| `bags_get_token_claim_stats` | JSON array with `wallet`, `totalClaimed`, `isCreator` |
+| `bags_get_claimable_positions` | `Claimable positions count: N` + JSON array |
+
+If any tool returns `isError: true`, check:
+1. `.env` file exists with a valid `BAGS_API_KEY`
+2. `npm install` was run in `mcp-server/`
+3. The Bags API is reachable (`curl https://public-api-v2.bags.fm/api/v1/token-launch/feed -H "x-api-key: YOUR_KEY"`)
 
 ## API reference
 
