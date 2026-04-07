@@ -3,37 +3,36 @@
 import { useMemo, useState } from 'react';
 
 const GREEN = '#20D55A';
-/** Absolute path to mcp-server (for Claude Desktop). Edit if you move the repo. */
-const MCP_SERVER_ABS = '/Users/ayush/Desktop/mcps/BagsMCP/mcp-server';
-const MCP_RUN_SCRIPT = `${MCP_SERVER_ABS}/run-mcp.sh`;
-const MCP_SERVER_DIST = `${MCP_SERVER_ABS}/dist/index.js`;
 
 const cursorConfig = `{
   "mcpServers": {
     "bagsmcp": {
-      "command": "bash",
-      "args": ["\${workspaceFolder}/mcp-server/run-mcp.sh"]
+      "command": "npx",
+      "args": ["-y", "tsx", "\${workspaceFolder}/mcp-server/src/index.ts"],
+      "env": {
+        "BAGS_API_KEY": "your_bags_api_key"
+      }
     }
   }
 }`;
 
-const claudeConfig =
-  '{\n' +
-  '  "mcpServers": {\n' +
-  '    "bagsmcp": {\n' +
-  '      "command": "bash",\n' +
-  '      "args": ["' +
-  MCP_RUN_SCRIPT.replace(/\\/g, '\\\\').replace(/"/g, '\\"') +
-  '"]\n' +
-  '    }\n' +
-  '  }\n' +
-  '}';
+const claudeConfig = `{
+  "mcpServers": {
+    "bagsmcp": {
+      "command": "npx",
+      "args": ["-y", "tsx", "/path/to/BagsMCP/mcp-server/src/index.ts"],
+      "env": {
+        "BAGS_API_KEY": "your_bags_api_key"
+      }
+    }
+  }
+}`;
 
 const endpointsText =
   'Bags API base URL:\n' +
   'https://public-api-v2.bags.fm/api/v1\n' +
   '\n' +
-  'Read-only endpoints used:\n' +
+  'Read-only endpoints exposed as MCP tools:\n' +
   '- /token-launch/feed\n' +
   '- /token-launch/creator/v3\n' +
   '- /token-launch/lifetime-fees\n' +
@@ -41,15 +40,13 @@ const endpointsText =
   '- /solana/bags/pools\n' +
   '- /token-launch/claimable-positions\n' +
   '\n' +
-  'MCP transport:\n' +
-  '- From BagsMCP repo root (recommended): npm run mcp:dev\n' +
-  '- Or: cd mcp-server && npx --yes tsx src/index.ts\n' +
-  '  (Running npx tsx src/index.ts from the Next.js root fails — there is no src/index.ts there.)\n' +
-  '- Loads BAGS_API_KEY from ../.env: bash ' +
-  MCP_RUN_SCRIPT +
-  '\n' +
-  '- Prod (after npm run build in mcp-server): node ' +
-  MCP_SERVER_DIST;
+  'Setup:\n' +
+  '1. Clone the repo: git clone https://github.com/user/BagsMCP.git\n' +
+  '2. Install deps: cd BagsMCP/mcp-server && npm install\n' +
+  '3. Get API key from https://dev.bags.fm\n' +
+  '4. Paste the JSON config into your MCP client settings\n' +
+  '5. Replace "your_bags_api_key" with your actual key\n' +
+  '6. For Claude Desktop: replace /path/to/BagsMCP with your actual path';
 
 export default function McpSetupPanel() {
   const [target, setTarget] = useState<'cursor' | 'claude'>('cursor');

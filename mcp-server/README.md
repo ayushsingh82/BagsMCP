@@ -49,14 +49,14 @@ The server uses **stdio** transport. It will wait for JSON-RPC messages on stdin
 ## Connect from Cursor
 
 1. Open Cursor Settings → MCP (or `~/.cursor/mcp.json`).
-2. Add a server entry for BagsMCP, for example:
+2. Add this config:
 
 ```json
 {
   "mcpServers": {
     "bagsmcp": {
-      "command": "node",
-      "args": ["/absolute/path/to/KalshiBags/mcp-server/dist/index.js"],
+      "command": "npx",
+      "args": ["-y", "tsx", "${workspaceFolder}/mcp-server/src/index.ts"],
       "env": {
         "BAGS_API_KEY": "your_bags_api_key"
       }
@@ -65,21 +65,25 @@ The server uses **stdio** transport. It will wait for JSON-RPC messages on stdin
 }
 ```
 
-Or use `npx` from the repo root:
+## Connect from Claude Desktop
+
+Add this to your Claude Desktop config (`~/.config/claude-desktop/config.json` on Linux, `~/Library/Application Support/Claude/claude_desktop_config.json` on macOS):
 
 ```json
 {
   "mcpServers": {
     "bagsmcp": {
-      "command": "node",
-      "args": ["/path/to/KalshiBags/mcp-server/dist/index.js"],
+      "command": "npx",
+      "args": ["-y", "tsx", "/path/to/BagsMCP/mcp-server/src/index.ts"],
       "env": {
-        "BAGS_API_KEY": "<your key>"
+        "BAGS_API_KEY": "your_bags_api_key"
       }
     }
   }
 }
 ```
+
+Replace `/path/to/BagsMCP` with the actual path where you cloned the repo.
 
 Restart Cursor (or reload MCP) and you can ask the AI to use Bags data via the tools below.
 

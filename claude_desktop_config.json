@@ -1,8 +1,11 @@
 {
   "mcpServers": {
     "bagsmcp": {
-      "command": "bash",
-      "args": ["/home/madhav/Desktop/BagsMCP/mcp-server/run-mcp.sh"]
+      "command": "npx",
+      "args": ["-y", "tsx", "/path/to/BagsMCP/mcp-server/src/index.ts"],
+      "env": {
+        "BAGS_API_KEY": "your_bags_api_key"
+      }
     }
   }
 }
