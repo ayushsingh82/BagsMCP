@@ -175,17 +175,17 @@ server.registerTool(
   "bags_get_claimable_positions",
   {
     description:
-      "Retrieve claimable fee positions. Optionally pass a wallet/user address to filter positions.",
+      "Retrieve claimable fee positions. Pass a wallet address to filter positions.",
     inputSchema: {
-      user: z
+      wallet: z
         .string()
         .optional()
-        .describe("Optional Solana wallet address (Base58)."),
+        .describe("Solana wallet address (Base58)."),
     },
   },
-  async ({ user }) => {
+  async ({ wallet }) => {
     const apiKey = requireApiKey();
-    const result = await getClaimablePositions(apiKey, user);
+    const result = await getClaimablePositions(apiKey, wallet);
     if (!result.success) {
       return {
         content: [{ type: "text", text: `Error fetching claimable positions: ${result.error}` }],

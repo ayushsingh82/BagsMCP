@@ -15,7 +15,7 @@ async function bagsFetch<T>(
   apiKey: string,
   params?: Record<string, string>
 ): Promise<BagsApiResponse<T>> {
-  const url = new URL(path, BAGS_API_BASE);
+  const url = new URL(BAGS_API_BASE + path);
   if (params) {
     Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, v));
   }
@@ -116,14 +116,14 @@ export async function getBagsPools(
   return { success: true, response: arr as Array<{ tokenMint?: string; baseMint?: string; [key: string]: unknown }> };
 }
 
-/** GET /token-launch/claimable-positions?user=... (user optional to support API variants) */
+/** GET /token-launch/claimable-positions?wallet=... */
 export async function getClaimablePositions(
   apiKey: string,
-  user?: string
+  wallet?: string
 ): Promise<BagsApiResponse<Array<Record<string, unknown>>>> {
   return bagsFetch<Array<Record<string, unknown>>>(
     "/token-launch/claimable-positions",
     apiKey,
-    user ? { user } : undefined
+    wallet ? { wallet } : undefined
   );
 }

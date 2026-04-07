@@ -2,7 +2,7 @@
   "mcpServers": {
     "bagsmcp": {
       "command": "bash",
-      "args": ["/Users/ayush/Desktop/mcps/BagsMCP/mcp-server/run-mcp.sh"]
+      "args": ["/home/madhav/Desktop/BagsMCP/mcp-server/run-mcp.sh"]
     }
   }
 }
