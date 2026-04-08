@@ -7,11 +7,8 @@ const GREEN = '#20D55A';
 const cursorConfig = `{
   "mcpServers": {
     "bagsmcp": {
-      "command": "npx",
-      "args": ["-y", "tsx", "\${workspaceFolder}/mcp-server/src/index.ts"],
-      "env": {
-        "BAGS_API_KEY": "your_bags_api_key"
-      }
+      "command": "bash",
+      "args": ["\${workspaceFolder}/mcp-server/run-mcp.sh"]
     }
   }
 }`;
@@ -19,11 +16,8 @@ const cursorConfig = `{
 const claudeConfig = `{
   "mcpServers": {
     "bagsmcp": {
-      "command": "npx",
-      "args": ["-y", "tsx", "/path/to/BagsMCP/mcp-server/src/index.ts"],
-      "env": {
-        "BAGS_API_KEY": "your_bags_api_key"
-      }
+      "command": "bash",
+      "args": ["/absolute/path/to/BagsMCP/mcp-server/run-mcp.sh"]
     }
   }
 }`;
@@ -33,20 +27,27 @@ const endpointsText =
   'https://public-api-v2.bags.fm/api/v1\n' +
   '\n' +
   'Read-only endpoints exposed as MCP tools:\n' +
-  '- /token-launch/feed\n' +
-  '- /token-launch/creator/v3\n' +
-  '- /token-launch/lifetime-fees\n' +
-  '- /token-launch/claim-stats\n' +
-  '- /solana/bags/pools\n' +
-  '- /token-launch/claimable-positions\n' +
+  '- bags_get_token_launch_feed (no input)\n' +
+  '- bags_get_token_launch_creators (input: tokenMint optional)\n' +
+  '- bags_get_token_lifetime_fees (input: tokenMint required)\n' +
+  '- bags_get_token_claim_stats (input: tokenMint required)\n' +
+  '- bags_list_pools (no input)\n' +
+  '- bags_get_claimable_positions (input: wallet optional)\n' +
   '\n' +
-  'Setup:\n' +
-  '1. Clone the repo: git clone https://github.com/user/BagsMCP.git\n' +
-  '2. Install deps: cd BagsMCP/mcp-server && npm install\n' +
-  '3. Get API key from https://dev.bags.fm\n' +
-  '4. Paste the JSON config into your MCP client settings\n' +
-  '5. Replace "your_bags_api_key" with your actual key\n' +
-  '6. For Claude Desktop: replace /path/to/BagsMCP with your actual path';
+  'Input examples:\n' +
+  '- tokenMint: "6XzJn2n5thof2FMdff9gize4FHCSmK5KnJnCF9PEBAGS"\n' +
+  '- wallet/creator address: "D2vFMLdk9UV1AGpCZvEtarr2sPrE58Ht3gQxogLttZMq"\n' +
+  '\n' +
+  'Useful prompts in Cursor:\n' +
+  '- Call bags_get_token_lifetime_fees with tokenMint "6Xz...BAGS"\n' +
+  '- Call bags_get_token_launch_creators with tokenMint "6Xz...BAGS"\n' +
+  '- Call bags_get_claimable_positions with wallet "D2vF...tZMq"\n' +
+  '\n' +
+  'Notes:\n' +
+  '- Keep BAGS_API_KEY in project .env (run-mcp.sh loads it automatically)\n' +
+  '- Cursor config above assumes workspace root is BagsMCP.\n' +
+  '- If your workspace root is the parent folder, use ${workspaceFolder}/BagsMCP/mcp-server/run-mcp.sh instead.\n' +
+  '- For Claude Desktop, replace /absolute/path/to/BagsMCP with your real local path.';
 
 export default function McpSetupPanel() {
   const [target, setTarget] = useState<'cursor' | 'claude'>('cursor');
