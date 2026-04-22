@@ -30,7 +30,7 @@ export default function Home() {
               <span style={{ color: GREEN }}> Everyone</span>
             </h1>
             <p className="text-lg md:text-xl max-w-2xl mx-auto mb-8" style={{ color: 'rgba(255,255,255,0.5)' }}>
-              Query tokens, health, claimers, and fee stats ,etc using MCP server & get data into Google Sheets, Google Docs. No code required.
+              Query tokens, health, claimers, and fee stats ,etc using MCP server & get data instantly in your AI assistant. No code required.
             </p>
             {/* Works with: Cursor, Claude */}
             <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12 mb-10">

@@ -49,6 +49,46 @@ const endpointsText =
   '- If your workspace root is the parent folder, use ${workspaceFolder}/BagsMCP/mcp-server/run-mcp.sh instead.\n' +
   '- For Claude Desktop, replace /absolute/path/to/BagsMCP with your real local path.';
 
+const endpointCards = [
+  {
+    title: 'API base URL',
+    items: ['https://public-api-v2.bags.fm/api/v1'],
+  },
+  {
+    title: 'Read-only endpoints exposed as MCP tools',
+    items: [
+      'bags_get_token_launch_feed (no input)',
+      'bags_get_token_launch_creators (input: tokenMint optional)',
+      'bags_get_token_lifetime_fees (input: tokenMint required)',
+      'bags_get_token_claim_stats (input: tokenMint required)',
+      'bags_list_pools (no input)',
+      'bags_get_claimable_positions (input: wallet optional)',
+    ],
+  },
+  {
+    title: 'Input examples',
+    items: [
+      'tokenMint: "6XzJn2n5thof2FMdff9gize4FHCSmK5KnJnCF9PEBAGS"',
+      'wallet/creator address: "D2vFMLdk9UV1AGpCZvEtarr2sPrE58Ht3gQxogLttZMq"',
+    ],
+  },
+  {
+    title: 'Useful prompts in Cursor',
+    items: [
+      'Call bags_get_token_lifetime_fees with tokenMint "6Xz...BAGS"',
+      'Call bags_get_token_launch_creators with tokenMint "6Xz...BAGS"',
+      'Call bags_get_claimable_positions with wallet "D2vF...tZMq"',
+    ],
+  },
+];
+
+const noteItems = [
+  'Keep BAGS_API_KEY in project .env (run-mcp.sh loads it automatically)',
+  'Cursor config above assumes workspace root is BagsMCP.',
+  'If your workspace root is the parent folder, use ${workspaceFolder}/BagsMCP/mcp-server/run-mcp.sh instead.',
+  'For Claude Desktop, replace /absolute/path/to/BagsMCP with your real local path.',
+];
+
 export default function McpSetupPanel() {
   const [target, setTarget] = useState<'cursor' | 'claude'>('cursor');
   const [copied, setCopied] = useState<'config' | 'endpoints' | null>(null);
@@ -125,9 +165,38 @@ export default function McpSetupPanel() {
               {copied === 'endpoints' ? 'Copied endpoints' : 'Copy endpoints'}
             </button>
           </div>
-          <pre className="rounded-lg p-4 text-xs md:text-sm overflow-x-auto border" style={{ borderColor: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.78)', backgroundColor: '#070707' }}>
-            <code>{endpointsText}</code>
-          </pre>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {endpointCards.map((card) => (
+              <div
+                key={card.title}
+                className="rounded-xl border p-4"
+                style={{ borderColor: 'rgba(255,255,255,0.08)', backgroundColor: 'rgba(255,255,255,0.02)' }}
+              >
+                <h4 className="text-sm font-semibold text-white mb-3">{card.title}</h4>
+                <ul className="space-y-2">
+                  {card.items.map((item) => (
+                    <li key={item} className="text-xs leading-relaxed" style={{ color: 'rgba(255,255,255,0.72)' }}>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+
+          <div
+            className="mt-4 rounded-xl border p-4"
+            style={{ borderColor: 'rgba(255,255,255,0.08)', backgroundColor: 'rgba(255,255,255,0.02)' }}
+          >
+            <h4 className="text-sm font-semibold text-white mb-3">Notes</h4>
+            <ul className="space-y-2">
+              {noteItems.map((item) => (
+                <li key={item} className="text-xs leading-relaxed" style={{ color: 'rgba(255,255,255,0.72)' }}>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     </section>
