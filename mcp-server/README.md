@@ -91,11 +91,27 @@ Restart Cursor (or reload MCP) and you can ask the AI to use Bags data via the t
 
 | Tool | Description |
 |------|-------------|
+| `bags_get_current_user_info` | Get authenticated user profile for the configured API key. |
 | `bags_get_token_launch_feed` | Get recent/active token launch feed from Bags. |
+| `bags_create_token_info` | Create token metadata + mint setup (imageUrl flow). |
 | `bags_get_token_launch_creators` | Get token creators/deployers (v3). Optional `tokenMint` filter. |
+| `bags_get_fee_share_wallet_v2` | Resolve fee-share wallet for one provider+username. |
+| `bags_get_fee_share_wallet_v2_bulk` | Bulk resolve fee-share wallets (1-100 entries). |
 | `bags_get_token_lifetime_fees` | Get total lifetime fees (lamports) for a token mint. |
+| `bags_create_fee_share_config` | Create fee-share config creation transactions (v2). |
 | `bags_get_token_claim_stats` | Get claim stats for all fee claimers: wallet, total claimed, royalty bps, is creator. |
+| `bags_get_fee_share_admin_list` | List token mints where wallet is fee-share admin. |
+| `bags_create_fee_share_admin_transfer_tx` | Create admin transfer transaction. |
+| `bags_create_fee_share_admin_update_config` | Create transactions to update fee-share config as admin. |
 | `bags_list_pools` | List all Bags pools with token mint + DBC/DAMM pool keys. |
+| `bags_get_trade_quote` | Get swap quote with route/slippage details. |
+| `bags_create_swap_transaction` | Build signable swap transaction from quote response. |
+| `bags_get_partner_stats` | Get partner claimed/unclaimed fee stats. |
+| `bags_create_partner_claim_transactions` | Build partner fee claim transactions. |
+| `bags_list_incorporation_projects` | List incorporation projects for the API key. |
+| `bags_get_incorporation_project_details` | Get one incorporation project's details by token address. |
+| `bags_send_solana_transaction` | Send a signed serialized Solana transaction. |
+| `bags_check_dexscreener_order_availability` | Check Dexscreener order availability for a token. |
 | `bags_get_claimable_positions` | Get claimable fee positions for a `wallet` address. |
 
 All tools require a valid `BAGS_API_KEY` in the environment.
