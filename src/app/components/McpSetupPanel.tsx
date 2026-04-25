@@ -26,22 +26,41 @@ const endpointsText =
   'Bags API base URL:\n' +
   'https://public-api-v2.bags.fm/api/v1\n' +
   '\n' +
-  'Read-only endpoints exposed as MCP tools:\n' +
+  'Tools exposed via MCP (22 total):\n' +
+  '- bags_get_current_user_info (no input)\n' +
   '- bags_get_token_launch_feed (no input)\n' +
+  '- bags_create_token_info (input: name/symbol/description/imageUrl + optional socials)\n' +
   '- bags_get_token_launch_creators (input: tokenMint optional)\n' +
+  '- bags_get_fee_share_wallet_v2 (input: provider + username)\n' +
+  '- bags_get_fee_share_wallet_v2_bulk (input: items[])\n' +
   '- bags_get_token_lifetime_fees (input: tokenMint required)\n' +
+  '- bags_create_fee_share_config (input: payer/baseMint/claimers/bps arrays)\n' +
   '- bags_get_token_claim_stats (input: tokenMint required)\n' +
+  '- bags_get_fee_share_admin_list (input: wallet required)\n' +
+  '- bags_create_fee_share_admin_transfer_tx (input: baseMint/currentAdmin/newAdmin/payer)\n' +
+  '- bags_create_fee_share_admin_update_config (input: baseMint/claimers/bps/payer)\n' +
   '- bags_list_pools (no input)\n' +
+  '- bags_get_trade_quote (input: inputMint/outputMint/amount + slippage)\n' +
+  '- bags_create_swap_transaction (input: quoteResponse + userPublicKey)\n' +
+  '- bags_get_partner_stats (input: partner wallet)\n' +
+  '- bags_create_partner_claim_transactions (input: partnerWallet)\n' +
+  '- bags_list_incorporation_projects (no input)\n' +
+  '- bags_get_incorporation_project_details (input: tokenAddress)\n' +
+  '- bags_send_solana_transaction (input: base58 serialized transaction)\n' +
+  '- bags_check_dexscreener_order_availability (input: tokenAddress)\n' +
   '- bags_get_claimable_positions (input: wallet optional)\n' +
   '\n' +
   'Input examples:\n' +
   '- tokenMint: "6XzJn2n5thof2FMdff9gize4FHCSmK5KnJnCF9PEBAGS"\n' +
   '- wallet/creator address: "D2vFMLdk9UV1AGpCZvEtarr2sPrE58Ht3gQxogLttZMq"\n' +
+  '- tokenAddress: "ABadLP3asy88raGZciQf61Lb4ZWhVbdpptjnZ4JuBAGS"\n' +
+  '- provider: "twitter", username: "TheRedWizardsol"\n' +
   '\n' +
   'Useful prompts in Cursor:\n' +
   '- Call bags_get_token_lifetime_fees with tokenMint "6Xz...BAGS"\n' +
   '- Call bags_get_token_launch_creators with tokenMint "6Xz...BAGS"\n' +
   '- Call bags_get_claimable_positions with wallet "D2vF...tZMq"\n' +
+  '- Call bags_get_trade_quote from SOL to a token with amount and slippage\n' +
   '\n' +
   'Notes:\n' +
   '- Keep BAGS_API_KEY in project .env (run-mcp.sh loads it automatically)\n' +
@@ -55,14 +74,40 @@ const endpointCards = [
     items: ['https://public-api-v2.bags.fm/api/v1'],
   },
   {
-    title: 'Read-only endpoints exposed as MCP tools',
+    title: 'Launch and discovery tools',
     items: [
+      'bags_get_current_user_info (no input)',
       'bags_get_token_launch_feed (no input)',
+      'bags_create_token_info (name/symbol/description/imageUrl)',
       'bags_get_token_launch_creators (input: tokenMint optional)',
-      'bags_get_token_lifetime_fees (input: tokenMint required)',
-      'bags_get_token_claim_stats (input: tokenMint required)',
       'bags_list_pools (no input)',
+      'bags_list_incorporation_projects (no input)',
+      'bags_get_incorporation_project_details (input: tokenAddress)',
+      'bags_check_dexscreener_order_availability (input: tokenAddress)',
+    ],
+  },
+  {
+    title: 'Fee share and analytics tools',
+    items: [
+      'bags_get_fee_share_wallet_v2 (input: provider + username)',
+      'bags_get_fee_share_wallet_v2_bulk (input: items[])',
+      'bags_create_fee_share_config (payer/baseMint/claimers/bps arrays)',
+      'bags_get_fee_share_admin_list (input: wallet)',
+      'bags_create_fee_share_admin_transfer_tx (baseMint/currentAdmin/newAdmin/payer)',
+      'bags_create_fee_share_admin_update_config (baseMint/claimers/bps/payer)',
+      'bags_get_token_lifetime_fees (input: tokenMint)',
+      'bags_get_token_claim_stats (input: tokenMint)',
       'bags_get_claimable_positions (input: wallet optional)',
+    ],
+  },
+  {
+    title: 'Trading and transactions tools',
+    items: [
+      'bags_get_trade_quote (inputMint/outputMint/amount + slippage)',
+      'bags_create_swap_transaction (quoteResponse + userPublicKey)',
+      'bags_get_partner_stats (input: partner wallet)',
+      'bags_create_partner_claim_transactions (input: partnerWallet)',
+      'bags_send_solana_transaction (input: serialized tx)',
     ],
   },
   {
@@ -78,6 +123,7 @@ const endpointCards = [
       'Call bags_get_token_lifetime_fees with tokenMint "6Xz...BAGS"',
       'Call bags_get_token_launch_creators with tokenMint "6Xz...BAGS"',
       'Call bags_get_claimable_positions with wallet "D2vF...tZMq"',
+      'Run a full report: creators + claim stats + lifetime fees + pools',
     ],
   },
 ];
